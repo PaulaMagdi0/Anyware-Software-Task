@@ -1,36 +1,49 @@
-# Node modules
+# --- Node ---
 node_modules/
-
-# Environment variables
-.env
-
-# Logs
-logs/
-*.log
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+pnpm-debug.log*
+package-lock.json
+yarn.lock
 
-# OS/system files
+# --- Environment Variables ---
+.env
+.env.*.local
+
+# --- Logs ---
+logs/
+*.log
+
+# --- OS / Editor ---
 .DS_Store
 Thumbs.db
+.vscode/
+*.sublime-project
+*.sublime-workspace
 
-# Optional cache directories
+# --- Cache / Temp ---
 .cache/
 tmp/
 temp/
+*.local
 
-# VS Code settings (optional)
-.vscode/
-
-# Build outputs (if any)
+# --- Build Outputs ---
 dist/
 build/
+.out/
+.next/
+coverage/
 
-# Nodemon config
+# --- Frontend (Vite / React / TypeScript) ---
+*.tsbuildinfo
+vite.config.ts
+*.d.ts
+
+# --- Backend (Nodemon / Debug) ---
 nodemon.json
 
-# Debug files
-*.local
-*.sublime-project
-*.sublime-workspace
+# --- Misc ---
+*.env.local
+*.env.production
+.idea/

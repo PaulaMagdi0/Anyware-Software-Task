@@ -1,32 +1,40 @@
-# 📚 Student Dashboard Backend – Anyware Software Challenge
+# 📚 Student Dashboard – Full Stack Challenge (Anyware Software)
 
-This is the **backend API** built with **Node.js, Express, and MongoDB** for the Anyware Software Full Stack Challenge. It supports a student dashboard with authentication, announcements, and quizzes functionality.
+This project is a **Full Stack Student Dashboard Application** built for the Anyware Software Challenge. It includes:
+
+- A **Node.js + Express + MongoDB backend** for managing authentication, quizzes, and announcements
+- A **React + Redux + MUI + TypeScript frontend** with protected routes, theming, and API integration
 
 ---
 
-## 📁 Features
+## 🧠 Features
 
-- 🔐 **JWT Authentication** (Login/Register for students)
-- 📄 **CRUD operations for Quizzes and Announcements**
-- 🧾 **Validation** with `express-validator`
-- 🔒 **Protected API routes** (only accessible to authenticated users)
-- 🌐 **MongoDB Atlas support**
-- ♻️ Clean **MVC structure**
+### ✅ Backend (Express + MongoDB)
+
+- 🔐 JWT-based user authentication (students only)
+- 📄 CRUD operations for **quizzes** and **announcements**
+- 🔒 Protected routes via middleware
+- 🧾 Validation with `express-validator`
+- 🌐 MongoDB Atlas database connection
+- ♻️ Modular MVC folder structure
+
+### ✅ Frontend (React + Redux + MUI + TypeScript)
+
+- 🧑‍🎓 Sign In with form validation and Redux state
+- 🎯 Protected dashboard view for authenticated users
+- 🧠 View quizzes (title, course, topic, due date, link)
+- 📢 View announcements (teacher, image, description, date)
+- 🌓 Light/Dark mode toggle with theme support
+- 🔁 Persistent login via Redux + localStorage
+- ❌ 404 page for unknown routes
 
 ---
 
 ## 🚀 Tech Stack
 
-- Node.js
-- Express.js
-- MongoDB (with Mongoose)
-- JSON Web Tokens (JWT)
-- express-validator
-- bcryptjs
-- dotenv
-- cors
-- morgan
-- nodemon
+- **Frontend:** React, TypeScript, Redux Toolkit, RTK Query, MUI, React Router v6
+- **Backend:** Node.js, Express, MongoDB, JWT, dotenv, morgan, cors
+- **Dev Tools:** Vite, Nodemon, VS Code, Postman
 
 ---
 
@@ -35,19 +43,25 @@ This is the **backend API** built with **Node.js, Express, and MongoDB** for the
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/your-username/student-dashboard-backend.git
-cd student-dashboard-backend
+git clone https://github.com/your-username/student-dashboard.git
+cd student-dashboard
 ```
 
 ### 2. Install Dependencies
 
 ```bash
+# For backend
+cd backend
+npm install
+
+# For frontend
+cd ../frontend
 npm install
 ```
 
 ### 3. Configure Environment Variables
 
-Create a `.env` file in the root:
+Create `.env` in `/backend`:
 
 ```env
 PORT=5000
@@ -55,90 +69,96 @@ MONGO_URI=mongodb+srv://<username>:<password>@cluster0.mongodb.net/anywaresoftwa
 JWT_SECRET=your-secure-jwt-secret
 ```
 
-### 4. Run the Server (Dev Mode)
+### 4. Run Both Projects
 
 ```bash
+# In one terminal - start backend
+cd backend
+npm run dev
+
+# In another terminal - start frontend
+cd frontend
 npm run dev
 ```
 
 ---
 
-## 📬 API Endpoints
+## 📬 Backend API Endpoints
 
-> All protected routes require the `Authorization: Bearer <token>` header.
+> All protected routes require: `Authorization: Bearer <token>`
 
-### 🔐 Auth
+### Auth
 
-| Method | Endpoint           | Description           |
-| ------ | ------------------ | --------------------- |
-| POST   | /api/auth/register | Register new user     |
-| POST   | /api/auth/login    | Login user, get token |
+| Method | Endpoint        | Description           |
+| ------ | --------------- | --------------------- |
+| POST   | /api/auth/login | Login user, get token |
 
-### 🧠 Quizzes
+### Quizzes
 
 | Method | Endpoint         | Description             |
 | ------ | ---------------- | ----------------------- |
 | GET    | /api/quizzes     | List all quizzes        |
-| GET    | /api/quizzes/:id | Get one quiz            |
 | POST   | /api/quizzes     | Create quiz (auth only) |
+| GET    | /api/quizzes/:id | Get one quiz            |
 | PUT    | /api/quizzes/:id | Update quiz             |
 | DELETE | /api/quizzes/:id | Delete quiz             |
 
-### 📢 Announcements
+### Announcements
 
 | Method | Endpoint               | Description            |
 | ------ | ---------------------- | ---------------------- |
 | GET    | /api/announcements     | List all announcements |
-| GET    | /api/announcements/:id | Get one announcement   |
 | POST   | /api/announcements     | Create announcement    |
+| GET    | /api/announcements/:id | Get one announcement   |
 | PUT    | /api/announcements/:id | Update announcement    |
 | DELETE | /api/announcements/:id | Delete announcement    |
 
 ---
 
-## 🔒 Authentication Flow
+## 📱 Frontend Routes
 
-- Register using `/api/auth/register`
-- Login with `/api/auth/login`
-- Use returned token in `Authorization` header to access protected endpoints
-
----
-
-## 🧪 Notes
-
-- You can seed sample data using MongoDB Compass or create a `seed.js` script (optional).
-- All responses follow standard JSON REST structure.
-- Backend is ready to connect to a React frontend with token-based auth.
+| Path         | Page             | Description                |
+| ------------ | ---------------- | -------------------------- |
+| `/`          | Home             | Hero, nav, footer          |
+| `/signin`    | Sign In          | Login form with validation |
+| `/dashboard` | Dashboard (Auth) | Quizzes + Announcements    |
+| `*`          | 404 Page         | Page not found             |
 
 ---
 
 ## 📦 Folder Structure
 
 ```
-backend/
-├── controllers/
-├── models/
-├── routes/
-├── middleware/
-├── utils/
-├── config/
-├── app.js
-├── server.js
-├── .env
-└── .gitignore
+root/
+├── backend/
+│   ├── controllers/
+│   ├── models/
+│   ├── routes/
+│   ├── middleware/
+│   ├── app.js, server.js, .env
+│
+├── frontend/
+│   ├── src/
+│   │   ├── pages/
+│   │   ├── components/
+│   │   ├── store/
+│   │   ├── services/
+│   │   ├── routes/
+│   │   └── App.tsx, main.tsx
 ```
 
 ---
 
-## 🧠 Evaluation Criteria (Met)
+## ✅ Challenge Criteria Met
 
-- ✔️ Clean MVC architecture
-- ✔️ Secure route protection and data access
-- ✔️ Fulfills all required features from the PDF spec
-- ✔️ Extensible and production-ready
+- ✔️ Secure login + protected routes
+- ✔️ Clean frontend dashboard UI with theme toggle
+- ✔️ RESTful backend with full CRUD
+- ✔️ Validation, token storage, and API integration
+- ✔️ Complete folder structure and documentation
 
 ---
 
 ## 📜 License
 
-This project was built as a take-home challenge for Anyware Software.
+Built as a take-home assessment for **Anyware Software**.
