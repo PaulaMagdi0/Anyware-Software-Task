@@ -4,6 +4,8 @@ import SignInPage from "../pages/SignInPage";
 import DashboardPage from "../pages/DashboardPage";
 import NotFoundPage from "../pages/NotFoundPage";
 import RequireAuth from "../components/RequireAuth";
+import RedirectIfAuthenticated from "../components/RedirectIfAuthenticated";
+import RequireAnyAuth from "../components/RequireAnyAuth";
 
 type Props = {
   mode: "light" | "dark";
@@ -13,11 +15,27 @@ type Props = {
 const AppRoutes = ({ mode, setMode }: Props) => {
   return (
     <Routes>
-      <Route path="/" element={<HomePage mode={mode} setMode={setMode} />} />
+      {/* 🔐 Home page only for guest or real user */}
+      <Route
+        path="/"
+        element={
+          <RequireAnyAuth>
+            <HomePage mode={mode} setMode={setMode} />
+          </RequireAnyAuth>
+        }
+      />
+
+      {/* 👤 Sign in available to all */}
       <Route
         path="/signin"
-        element={<SignInPage mode={mode} setMode={setMode} />}
+        element={
+          <RedirectIfAuthenticated>
+            <SignInPage mode={mode} setMode={setMode} />
+          </RedirectIfAuthenticated>
+        }
       />
+
+      {/* 🔐 Dashboard only for real users */}
       <Route
         path="/dashboard"
         element={
@@ -26,6 +44,7 @@ const AppRoutes = ({ mode, setMode }: Props) => {
           </RequireAuth>
         }
       />
+
       <Route
         path="*"
         element={<NotFoundPage mode={mode} setMode={setMode} />}

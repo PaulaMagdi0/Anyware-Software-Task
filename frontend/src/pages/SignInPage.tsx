@@ -6,6 +6,7 @@ import {
   Typography,
   Alert,
   CircularProgress,
+  Tooltip,
 } from "@mui/material";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
@@ -29,12 +30,13 @@ const SignInPage = ({ mode, setMode }: Props) => {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [login, { isLoading }] = useLoginMutation();
   const [error, setErrorMsg] = useState("");
+  const [login, { isLoading }] = useLoginMutation();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setErrorMsg("");
+
     if (!email || !password) {
       setErrorMsg("Please fill in both fields.");
       return;
@@ -46,11 +48,23 @@ const SignInPage = ({ mode, setMode }: Props) => {
       dispatch(setCredentials({ user: data.email, token: data.token }));
       navigate("/dashboard");
     } catch (err: any) {
-      setErrorMsg(err?.data?.message || "Login failed.");
-      dispatch(setError(err?.data?.message || "Login failed."));
+      const msg = err?.data?.message || "Login failed.";
+      setErrorMsg(msg);
+      dispatch(setError(msg));
     } finally {
       dispatch(setLoading(false));
     }
+  };
+
+  const handleQuickLogin = () => {
+    dispatch(
+      setCredentials({
+        user: "guest",
+        token: "guest-token",
+        isGuest: true,
+      })
+    );
+    navigate("/"); // redirect to hero/home
   };
 
   return (
@@ -61,7 +75,13 @@ const SignInPage = ({ mode, setMode }: Props) => {
           <Typography variant="h4" gutterBottom align="center">
             Sign In
           </Typography>
-          {error && <Alert severity="error">{error}</Alert>}
+
+          {error && (
+            <Alert severity="error" sx={{ mb: 2 }}>
+              {error}
+            </Alert>
+          )}
+
           <form onSubmit={handleSubmit}>
             <TextField
               label="Email"
@@ -95,6 +115,18 @@ const SignInPage = ({ mode, setMode }: Props) => {
               )}
             </Button>
           </form>
+
+          <Tooltip title="Log in instantly using a demo student account">
+            <Button
+              variant="outlined"
+              fullWidth
+              sx={{ mt: 2 }}
+              onClick={handleQuickLogin}
+              disabled={isLoading}
+            >
+              Quick Login (Guest)
+            </Button>
+          </Tooltip>
         </Box>
       </Container>
       <Footer />

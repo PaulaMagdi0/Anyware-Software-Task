@@ -1,30 +1,20 @@
 import { useSelector } from "react-redux";
 import { Navigate, useLocation } from "react-router-dom";
-import type { RootState } from "../store/index";
-import { Box, CircularProgress } from "@mui/material";
+import {
+  selectIsAuthenticated,
+  selectIsGuest,
+} from "../store/slices/authSlice";
 
 const RequireAuth = ({ children }: { children: JSX.Element }) => {
-  const { token, loading } = useSelector((state: RootState) => state.auth);
+  const isAuthenticated = useSelector(selectIsAuthenticated);
+  const isGuest = useSelector(selectIsGuest);
   const location = useLocation();
 
-  if (loading) {
-    return (
-      <Box
-        height="100vh"
-        display="flex"
-        justifyContent="center"
-        alignItems="center"
-      >
-        <CircularProgress />
-      </Box>
-    );
+  if (!isAuthenticated || isGuest) {
+    return <Navigate to="/" state={{ from: location }} replace />;
   }
 
-  return token ? (
-    children
-  ) : (
-    <Navigate to="/signin" replace state={{ from: location }} />
-  );
+  return children;
 };
 
 export default RequireAuth;
