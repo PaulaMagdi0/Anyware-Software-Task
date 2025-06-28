@@ -10,15 +10,17 @@ const resources = {
       logout: "Logout",
       dashboard: "Dashboard",
       language: "Language",
+      welcome: "Welcome to Student Dashboard",
     },
   },
   ar: {
     translation: {
-      home: "لوحة معلومات الطالب",
+      home: "لوحة الطالب",
       signIn: "تسجيل الدخول",
       logout: "تسجيل الخروج",
       dashboard: "لوحة التحكم",
       language: "اللغة",
+      welcome: "مرحبًا بك في لوحة الطالب",
     },
   },
 };

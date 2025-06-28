@@ -83,12 +83,12 @@ const Navbar = ({ mode, setMode }: Props) => {
 
   if (loading) {
     return (
-      <AppBar 
-        position="sticky" 
+      <AppBar
+        position="sticky"
         elevation={0}
-        sx={{ 
+        sx={{
           backgroundColor: alpha(theme.palette.background.default, 0.8),
-          backdropFilter: 'blur(10px)',
+          backdropFilter: "blur(10px)",
         }}
       >
         <Toolbar sx={{ justifyContent: "center" }}>
@@ -99,54 +99,54 @@ const Navbar = ({ mode, setMode }: Props) => {
   }
 
   return (
-    <AppBar 
-      position="sticky" 
+    <AppBar
+      position="sticky"
       elevation={0}
-      sx={{ 
+      sx={{
         backgroundColor: alpha(theme.palette.background.default, 0.8),
-        backdropFilter: 'blur(10px)',
+        backdropFilter: "blur(10px)",
         borderBottom: `1px solid ${alpha(theme.palette.divider, 0.1)}`,
         animation: `${fadeInDown} 0.5s ease-out`,
       }}
     >
       <Container maxWidth="lg">
-        <Toolbar 
-          sx={{ 
+        <Toolbar
+          sx={{
             justifyContent: "space-between",
             py: 1,
           }}
         >
-          <Box 
-            display="flex" 
-            alignItems="center" 
+          <Box
+            display="flex"
+            alignItems="center"
             gap={1}
             component={Link}
             to="/"
-            sx={{ 
+            sx={{
               color: theme.palette.text.primary,
               textDecoration: "none",
-              transition: 'transform 0.2s ease-in-out',
-              '&:hover': {
-                transform: 'scale(1.05)',
-              }
+              transition: "transform 0.2s ease-in-out",
+              "&:hover": {
+                transform: "scale(1.05)",
+              },
             }}
           >
-            <SchoolIcon 
-              sx={{ 
+            <SchoolIcon
+              sx={{
                 color: theme.palette.primary.main,
                 fontSize: 28,
-              }} 
+              }}
             />
             <Typography
               variant="h6"
-              sx={{ 
+              sx={{
                 fontWeight: "bold",
                 background: `linear-gradient(45deg, ${theme.palette.primary.main}, ${theme.palette.primary.light})`,
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent',
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
               }}
             >
-              {t("Student Dashboard")}
+              {t("home")}
             </Typography>
           </Box>
 
@@ -155,13 +155,13 @@ const Navbar = ({ mode, setMode }: Props) => {
             <Tooltip title={mode === "light" ? "Dark Mode" : "Light Mode"}>
               <IconButton
                 onClick={() => setMode(mode === "light" ? "dark" : "light")}
-                sx={{ 
+                sx={{
                   color: theme.palette.text.primary,
-                  transition: 'transform 0.2s ease',
-                  '&:hover': {
-                    transform: 'rotate(20deg)',
+                  transition: "transform 0.2s ease",
+                  "&:hover": {
+                    transform: "rotate(20deg)",
                     backgroundColor: alpha(theme.palette.primary.main, 0.1),
-                  }
+                  },
                 }}
               >
                 {mode === "light" ? <Brightness4 /> : <Brightness7 />}
@@ -172,13 +172,13 @@ const Navbar = ({ mode, setMode }: Props) => {
             <Tooltip title={t("language") || "Language"}>
               <IconButton
                 onClick={handleLangClick}
-                sx={{ 
+                sx={{
                   color: theme.palette.text.primary,
-                  transition: 'transform 0.2s ease',
-                  '&:hover': {
-                    transform: 'translateY(-2px)',
+                  transition: "transform 0.2s ease",
+                  "&:hover": {
+                    transform: "translateY(-2px)",
                     backgroundColor: alpha(theme.palette.primary.main, 0.1),
-                  }
+                  },
                 }}
                 aria-controls={open ? "lang-menu" : undefined}
                 aria-haspopup="true"
@@ -198,24 +198,24 @@ const Navbar = ({ mode, setMode }: Props) => {
                   borderRadius: 2,
                   mt: 1.5,
                   minWidth: 120,
-                  overflow: 'visible',
-                  filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.15))',
-                  '&:before': {
+                  overflow: "visible",
+                  filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.15))",
+                  "&:before": {
                     content: '""',
-                    display: 'block',
-                    position: 'absolute',
+                    display: "block",
+                    position: "absolute",
                     top: 0,
                     right: 14,
                     width: 10,
                     height: 10,
-                    bgcolor: 'background.paper',
-                    transform: 'translateY(-50%) rotate(45deg)',
+                    bgcolor: "background.paper",
+                    transform: "translateY(-50%) rotate(45deg)",
                     zIndex: 0,
                   },
                 },
               }}
-              transformOrigin={{ horizontal: 'right', vertical: 'top' }}
-              anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
+              transformOrigin={{ horizontal: "right", vertical: "top" }}
+              anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
             >
               <MenuItem onClick={() => handleLangClose("en")}>English</MenuItem>
               <MenuItem onClick={() => handleLangClose("ar")}>العربية</MenuItem>
@@ -223,7 +223,7 @@ const Navbar = ({ mode, setMode }: Props) => {
 
             {/* 🔐 Auth Buttons */}
             {!token ? (
-              <Button 
+              <Button
                 variant="contained"
                 disableElevation
                 onClick={() => navigate("/signin")}
@@ -231,11 +231,14 @@ const Navbar = ({ mode, setMode }: Props) => {
                   borderRadius: 2,
                   px: 2,
                   background: `linear-gradient(45deg, ${theme.palette.primary.main}, ${theme.palette.primary.light})`,
-                  transition: 'all 0.3s ease',
-                  '&:hover': {
-                    transform: 'translateY(-2px)',
-                    boxShadow: `0 4px 8px ${alpha(theme.palette.primary.main, 0.25)}`,
-                  }
+                  transition: "all 0.3s ease",
+                  "&:hover": {
+                    transform: "translateY(-2px)",
+                    boxShadow: `0 4px 8px ${alpha(
+                      theme.palette.primary.main,
+                      0.25
+                    )}`,
+                  },
                 }}
               >
                 {t("signIn")}
@@ -243,37 +246,40 @@ const Navbar = ({ mode, setMode }: Props) => {
             ) : (
               <>
                 {!isGuest && (
-                  <Button 
+                  <Button
                     variant="outlined"
                     onClick={() => navigate("/dashboard")}
                     sx={{
                       borderRadius: 2,
                       borderColor: theme.palette.primary.main,
                       color: theme.palette.primary.main,
-                      transition: 'all 0.3s ease',
-                      '&:hover': {
-                        transform: 'translateY(-2px)',
+                      transition: "all 0.3s ease",
+                      "&:hover": {
+                        transform: "translateY(-2px)",
                         borderColor: theme.palette.primary.main,
-                        backgroundColor: alpha(theme.palette.primary.main, 0.05),
-                      }
+                        backgroundColor: alpha(
+                          theme.palette.primary.main,
+                          0.05
+                        ),
+                      },
                     }}
                   >
                     {t("dashboard")}
                   </Button>
                 )}
-                <Button 
+                <Button
                   variant="outlined"
                   onClick={handleLogout}
                   sx={{
                     borderRadius: 2,
                     borderColor: theme.palette.error.main,
                     color: theme.palette.error.main,
-                    transition: 'all 0.3s ease',
-                    '&:hover': {
-                      transform: 'translateY(-2px)',
+                    transition: "all 0.3s ease",
+                    "&:hover": {
+                      transform: "translateY(-2px)",
                       borderColor: theme.palette.error.main,
                       backgroundColor: alpha(theme.palette.error.main, 0.05),
-                    }
+                    },
                   }}
                 >
                   {t("logout")}
