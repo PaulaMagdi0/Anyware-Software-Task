@@ -5,7 +5,7 @@ import LanguageDetector from "i18next-browser-languagedetector";
 const resources = {
   en: {
     translation: {
-      home: "Home",
+      home: "Student Dashboard",
       signIn: "Sign In",
       logout: "Logout",
       dashboard: "Dashboard",
@@ -14,7 +14,7 @@ const resources = {
   },
   ar: {
     translation: {
-      home: "الرئيسية",
+      home: "لوحة معلومات الطالب",
       signIn: "تسجيل الدخول",
       logout: "تسجيل الخروج",
       dashboard: "لوحة التحكم",
