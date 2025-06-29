@@ -24,8 +24,8 @@ import { useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import { useLoginMutation } from "../services/apiSlice";
-import SchoolIcon from '@mui/icons-material/School';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import SchoolIcon from "@mui/icons-material/School";
+import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 
 type Props = {
   mode: "light" | "dark";
@@ -56,13 +56,13 @@ const slideIn = keyframes`
 
 const pulse = keyframes`
   0% {
-    box-shadow: 0 0 0 0 ${alpha('#1976d2', 0.7)};
+    box-shadow: 0 0 0 0 ${alpha("#1976d2", 0.7)};
   }
   70% {
-    box-shadow: 0 0 0 10px ${alpha('#1976d2', 0)};
+    box-shadow: 0 0 0 10px ${alpha("#1976d2", 0)};
   }
   100% {
-    box-shadow: 0 0 0 0 ${alpha('#1976d2', 0)};
+    box-shadow: 0 0 0 0 ${alpha("#1976d2", 0)};
   }
 `;
 
@@ -74,7 +74,7 @@ const SignInPage = ({ mode, setMode }: Props) => {
   const [error, setErrorMsg] = useState("");
   const [login, { isLoading }] = useLoginMutation();
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -112,175 +112,196 @@ const SignInPage = ({ mode, setMode }: Props) => {
   };
 
   return (
-    <Box sx={{ 
-      minHeight: '100vh',
-      display: 'flex', 
-      flexDirection: 'column',
-      bgcolor: theme.palette.background.default,
-      background: mode === 'dark' 
-        ? 'linear-gradient(135deg, #1a1a2e 0%, #16213e 100%)' 
-        : 'linear-gradient(135deg, #f5f7fa 0%, #e4e8f0 100%)',
-    }}>
+    <Box
+      sx={{
+        minHeight: "100vh",
+        display: "flex",
+        flexDirection: "column",
+        bgcolor: theme.palette.background.default,
+        background:
+          mode === "dark"
+            ? "linear-gradient(135deg, #1a1a2e 0%, #16213e 100%)"
+            : "linear-gradient(135deg, #f5f7fa 0%, #e4e8f0 100%)",
+      }}
+    >
       <Navbar mode={mode} setMode={setMode} />
-      
-      <Box sx={{ 
-        flexGrow: 1,
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        py: 4,
-        animation: `${fadeIn} 0.8s ease-out`
-      }}>
+
+      <Box
+        sx={{
+          flexGrow: 1,
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          py: 4,
+          animation: `${fadeIn} 0.8s ease-out`,
+        }}
+      >
         <Container maxWidth="lg" sx={{ px: { xs: 2, md: 3 } }}>
-          <Paper 
+          <Paper
             elevation={16}
-            sx={{ 
+            sx={{
               borderRadius: 4,
-              overflow: 'hidden',
-              display: 'flex',
-              flexDirection: isMobile ? 'column' : 'row',
-              minHeight: isMobile ? 'auto' : '550px',
-              boxShadow: mode === 'dark' 
-                ? '0 10px 40px rgba(0,0,0,0.5)' 
-                : '0 10px 40px rgba(0,0,0,0.1)',
-              transition: 'transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out',
-              '&:hover': {
-                transform: 'translateY(-5px)',
-                boxShadow: mode === 'dark' 
-                  ? '0 15px 50px rgba(0,0,0,0.6)' 
-                  : '0 15px 50px rgba(0,0,0,0.15)',
-              }
+              overflow: "hidden",
+              display: "flex",
+              flexDirection: isMobile ? "column" : "row",
+              minHeight: isMobile ? "auto" : "550px",
+              boxShadow:
+                mode === "dark"
+                  ? "0 10px 40px rgba(0,0,0,0.5)"
+                  : "0 10px 40px rgba(0,0,0,0.1)",
+              transition:
+                "transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out",
+              "&:hover": {
+                transform: "translateY(-5px)",
+                boxShadow:
+                  mode === "dark"
+                    ? "0 15px 50px rgba(0,0,0,0.6)"
+                    : "0 15px 50px rgba(0,0,0,0.15)",
+              },
             }}
           >
             {/* Hero Section */}
             <Box
               sx={{
-                flex: isMobile ? '0 0 250px' : '0 0 50%',
+                flex: isMobile ? "0 0 250px" : "0 0 50%",
                 background: `linear-gradient(135deg, ${theme.palette.primary.main} 0%, ${theme.palette.primary.dark} 100%)`,
-                color: 'white',
-                display: 'flex',
-                flexDirection: 'column',
-                justifyContent: 'center',
-                alignItems: 'center',
+                color: "white",
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "center",
+                alignItems: "center",
                 p: 4,
-                textAlign: 'center',
-                position: 'relative',
-                overflow: 'hidden',
-                backgroundImage: 'url("https://source.unsplash.com/1600x900/?education,campus")',
-                backgroundSize: 'cover',
-                backgroundPosition: 'center',
-                '&::before': {
+                textAlign: "center",
+                position: "relative",
+                overflow: "hidden",
+                backgroundImage:
+                  'url("https://source.unsplash.com/1600x900/?education,campus")',
+                backgroundSize: "cover",
+                backgroundPosition: "center",
+                "&::before": {
                   content: '""',
-                  position: 'absolute',
+                  position: "absolute",
                   top: 0,
                   left: 0,
                   right: 0,
                   bottom: 0,
-                  backgroundColor: 'rgba(0,0,0,0.6)',
-                  zIndex: 1
+                  backgroundColor: "rgba(0,0,0,0.6)",
+                  zIndex: 1,
                 },
-                '&::after': {
+                "&::after": {
                   content: '""',
-                  position: 'absolute',
+                  position: "absolute",
                   top: 0,
                   left: 0,
                   right: 0,
                   bottom: 0,
-                  background: `linear-gradient(135deg, ${alpha(theme.palette.primary.dark, 0.7)} 0%, ${alpha(theme.palette.primary.main, 0.4)} 100%)`,
-                  zIndex: 2
-                }
+                  background: `linear-gradient(135deg, ${alpha(
+                    theme.palette.primary.dark,
+                    0.7
+                  )} 0%, ${alpha(theme.palette.primary.main, 0.4)} 100%)`,
+                  zIndex: 2,
+                },
               }}
             >
-              <Box sx={{ 
-                position: 'relative', 
-                zIndex: 3,
-                animation: `${slideIn} 0.8s ease-out`,
-              }}>
-                <Box sx={{ 
-                  display: 'inline-flex',
-                  p: 2,
-                  borderRadius: '50%',
-                  bgcolor: 'rgba(255,255,255,0.2)',
-                  mb: 3,
-                  animation: `${pulse} 2s infinite`,
-                }}>
+              <Box
+                sx={{
+                  position: "relative",
+                  zIndex: 3,
+                  animation: `${slideIn} 0.8s ease-out`,
+                }}
+              >
+                <Box
+                  sx={{
+                    display: "inline-flex",
+                    p: 2,
+                    borderRadius: "50%",
+                    bgcolor: "rgba(255,255,255,0.2)",
+                    mb: 3,
+                    animation: `${pulse} 2s infinite`,
+                  }}
+                >
                   <SchoolIcon sx={{ fontSize: 70 }} />
                 </Box>
-                <Typography 
-                  variant="h3" 
-                  component="h1" 
-                  sx={{ 
-                    fontWeight: 'bold', 
+                <Typography
+                  variant="h3"
+                  component="h1"
+                  sx={{
+                    fontWeight: "bold",
                     mb: 2,
-                    textShadow: '0 2px 10px rgba(0,0,0,0.3)',
+                    textShadow: "0 2px 10px rgba(0,0,0,0.3)",
                     animation: `${fadeIn} 0.8s ease-out 0.2s both`,
                   }}
                 >
                   Welcome Back
                 </Typography>
-                <Typography 
-                  variant="h6" 
-                  sx={{ 
-                    mb: 3, 
+                <Typography
+                  variant="h6"
+                  sx={{
+                    mb: 3,
                     opacity: 0.9,
-                    textShadow: '0 2px 8px rgba(0,0,0,0.3)',
+                    textShadow: "0 2px 8px rgba(0,0,0,0.3)",
                     animation: `${fadeIn} 0.8s ease-out 0.4s both`,
                   }}
                 >
                   Access your student dashboard and stay connected
                 </Typography>
-                <Typography 
-                  variant="body1" 
-                  sx={{ 
-                    maxWidth: '80%', 
-                    mx: 'auto', 
+                <Typography
+                  variant="body1"
+                  sx={{
+                    maxWidth: "80%",
+                    mx: "auto",
                     opacity: 0.8,
                     animation: `${fadeIn} 0.8s ease-out 0.6s both`,
                   }}
                 >
-                  Track your progress, access learning materials, and connect with your peers
+                  Track your progress, access learning materials, and connect
+                  with your peers
                 </Typography>
               </Box>
             </Box>
-            
+
             {/* Login Form */}
             <Box
               sx={{
-                flex: isMobile ? '1' : '0 0 50%',
+                flex: isMobile ? "1" : "0 0 50%",
                 p: { xs: 3, md: 5 },
-                display: 'flex',
-                flexDirection: 'column',
-                justifyContent: 'center',
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "center",
                 animation: `${fadeIn} 0.8s ease-out 0.3s both`,
+                bgcolor: theme.palette.background.paper,
               }}
             >
-              <Box sx={{ textAlign: 'center', mb: 3 }}>
-                <Box sx={{ 
-                  display: 'inline-flex',
-                  p: 1.5,
-                  borderRadius: '50%',
-                  bgcolor: theme.palette.primary.light,
-                  color: theme.palette.primary.contrastText,
-                  mb: 2,
-                  animation: `${pulse} 2s infinite`,
-                }}>
+              <Box sx={{ textAlign: "center", mb: 3 }}>
+                <Box
+                  sx={{
+                    display: "inline-flex",
+                    p: 1.5,
+                    borderRadius: "50%",
+                    bgcolor: theme.palette.primary.light,
+                    color: theme.palette.primary.contrastText,
+                    mb: 2,
+                    animation: `${pulse} 2s infinite`,
+                  }}
+                >
                   <LockOutlinedIcon />
                 </Box>
-                <Typography 
-                  variant="h4" 
-                  component="h1" 
+                <Typography
+                  variant="h4"
+                  component="h1"
                   gutterBottom
-                  sx={{ 
+                  sx={{
                     fontWeight: 500,
                     animation: `${fadeIn} 0.8s ease-out 0.4s both`,
+                    color: theme.palette.text.primary,
                   }}
                 >
                   Sign In
                 </Typography>
-                <Typography 
-                  variant="body2" 
-                  color="text.secondary" 
-                  sx={{ 
+                <Typography
+                  variant="body2"
+                  color="text.secondary"
+                  sx={{
                     mb: 3,
                     animation: `${fadeIn} 0.8s ease-out 0.5s both`,
                   }}
@@ -290,9 +311,9 @@ const SignInPage = ({ mode, setMode }: Props) => {
               </Box>
 
               {error && (
-                <Alert 
-                  severity="error" 
-                  sx={{ 
+                <Alert
+                  severity="error"
+                  sx={{
                     mb: 2,
                     animation: `${fadeIn} 0.5s ease-out`,
                   }}
@@ -314,14 +335,14 @@ const SignInPage = ({ mode, setMode }: Props) => {
                   sx={{
                     mb: 2,
                     animation: `${fadeIn} 0.8s ease-out 0.6s both`,
-                    '& .MuiOutlinedInput-root': {
-                      '&:hover fieldset': {
+                    "& .MuiOutlinedInput-root": {
+                      "&:hover fieldset": {
                         borderColor: theme.palette.primary.main,
                       },
-                      '&.Mui-focused fieldset': {
+                      "&.Mui-focused fieldset": {
                         borderWidth: 2,
-                      }
-                    }
+                      },
+                    },
                   }}
                 />
                 <TextField
@@ -336,14 +357,14 @@ const SignInPage = ({ mode, setMode }: Props) => {
                   sx={{
                     mb: 3,
                     animation: `${fadeIn} 0.8s ease-out 0.7s both`,
-                    '& .MuiOutlinedInput-root': {
-                      '&:hover fieldset': {
+                    "& .MuiOutlinedInput-root": {
+                      "&:hover fieldset": {
                         borderColor: theme.palette.primary.main,
                       },
-                      '&.Mui-focused fieldset': {
+                      "&.Mui-focused fieldset": {
                         borderWidth: 2,
-                      }
-                    }
+                      },
+                    },
                   }}
                 />
                 <Button
@@ -351,18 +372,18 @@ const SignInPage = ({ mode, setMode }: Props) => {
                   type="submit"
                   fullWidth
                   size="large"
-                  sx={{ 
-                    mt: 1, 
-                    py: 1.5, 
+                  sx={{
+                    mt: 1,
+                    py: 1.5,
                     borderRadius: 2,
                     animation: `${fadeIn} 0.8s ease-out 0.8s both`,
                     background: `linear-gradient(45deg, ${theme.palette.primary.dark} 0%, ${theme.palette.primary.main} 100%)`,
-                    boxShadow: '0 4px 10px rgba(25, 118, 210, 0.3)',
-                    transition: 'all 0.3s ease',
-                    '&:hover': {
-                      boxShadow: '0 6px 15px rgba(25, 118, 210, 0.4)',
-                      transform: 'translateY(-2px)'
-                    }
+                    boxShadow: "0 4px 10px rgba(25, 118, 210, 0.3)",
+                    transition: "all 0.3s ease",
+                    "&:hover": {
+                      boxShadow: "0 6px 15px rgba(25, 118, 210, 0.4)",
+                      transform: "translateY(-2px)",
+                    },
                   }}
                   disabled={isLoading}
                 >
@@ -378,15 +399,17 @@ const SignInPage = ({ mode, setMode }: Props) => {
                 <Button
                   variant="outlined"
                   fullWidth
-                  sx={{ 
-                    mt: 2, 
+                  sx={{
+                    mt: 2,
                     borderRadius: 2,
                     animation: `${fadeIn} 0.8s ease-out 0.9s both`,
-                    transition: 'all 0.3s ease',
-                    '&:hover': {
+                    transition: "all 0.3s ease",
+                    "&:hover": {
                       backgroundColor: alpha(theme.palette.primary.main, 0.05),
-                      transform: 'translateY(-2px)'
-                    }
+                      transform: "translateY(-2px)",
+                    },
+                    color: theme.palette.text.primary,
+                    borderColor: theme.palette.divider,
                   }}
                   onClick={handleQuickLogin}
                   disabled={isLoading}
@@ -398,7 +421,7 @@ const SignInPage = ({ mode, setMode }: Props) => {
           </Paper>
         </Container>
       </Box>
-      
+
       <Footer />
     </Box>
   );

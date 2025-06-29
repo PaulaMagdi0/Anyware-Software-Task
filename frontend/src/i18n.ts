@@ -11,6 +11,8 @@ const resources = {
       dashboard: "Dashboard",
       language: "Language",
       welcome: "Welcome to Student Dashboard",
+      dashboardShort: "Dash",
+      logoutShort: "Exit",
     },
   },
   ar: {
@@ -21,6 +23,8 @@ const resources = {
       dashboard: "لوحة التحكم",
       language: "اللغة",
       welcome: "مرحبًا بك في لوحة الطالب",
+      dashboardShort: "لوحة",
+      logoutShort: "خروج",
     },
   },
 };

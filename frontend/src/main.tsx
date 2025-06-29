@@ -11,7 +11,7 @@ import { CacheProvider } from "@emotion/react";
 import createCache from "@emotion/cache";
 import rtlPlugin from "stylis-plugin-rtl";
 import { prefixer } from "stylis";
-import { useTranslation } from "react-i18next";
+import "./index.css";
 
 // Get language direction
 const language = localStorage.getItem("i18nextLng") || "en";

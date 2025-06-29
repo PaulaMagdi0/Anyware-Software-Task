@@ -13,10 +13,19 @@ import {
   alpha,
   keyframes,
   Container,
+  useMediaQuery,
 } from "@mui/material";
-import { Brightness4, Brightness7 } from "@mui/icons-material";
+import {
+  Brightness4,
+  Brightness7,
+  Menu as MenuIcon,
+  Close,
+} from "@mui/icons-material";
 import TranslateIcon from "@mui/icons-material/Translate";
 import SchoolIcon from "@mui/icons-material/School";
+import LoginIcon from "@mui/icons-material/Login";
+import DashboardIcon from "@mui/icons-material/Dashboard";
+import LogoutIcon from "@mui/icons-material/Logout";
 import { useNavigate, Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import {
@@ -31,6 +40,9 @@ import React, { useEffect, useState } from "react";
 type Props = {
   mode: "light" | "dark";
   setMode: (mode: "light" | "dark") => void;
+  sidebarToggle?: boolean;
+  setSidebarOpen?: (open: boolean) => void;
+  sidebarOpen?: boolean;
 };
 
 const fadeInDown = keyframes`
@@ -44,21 +56,27 @@ const fadeInDown = keyframes`
   }
 `;
 
-const Navbar = ({ mode, setMode }: Props) => {
+const Navbar = ({
+  mode,
+  setMode,
+  sidebarToggle,
+  setSidebarOpen,
+  sidebarOpen,
+}: Props) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { t, i18n } = useTranslation();
   const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+  const isTablet = useMediaQuery(theme.breakpoints.between("sm", "md"));
 
   const token = useSelector((state: RootState) => state.auth.token);
   const isGuest = useSelector(selectIsGuest);
   const loading = useSelector(selectAuthLoading);
 
-  // Language dropdown state
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
 
-  // Persist selected language on load
   useEffect(() => {
     const storedLang = localStorage.getItem("i18nextLng") || "en";
     i18n.changeLanguage(storedLang);
@@ -113,45 +131,66 @@ const Navbar = ({ mode, setMode }: Props) => {
         <Toolbar
           sx={{
             justifyContent: "space-between",
-            py: 1,
+            py: { xs: 0.5, sm: 1 },
+            px: { xs: 0, sm: 2 },
           }}
         >
-          <Box
-            display="flex"
-            alignItems="center"
-            gap={1}
-            component={Link}
-            to="/"
-            sx={{
-              color: theme.palette.text.primary,
-              textDecoration: "none",
-              transition: "transform 0.2s ease-in-out",
-              "&:hover": {
-                transform: "scale(1.05)",
-              },
-            }}
-          >
-            <SchoolIcon
+          {/* Combined Menu Toggle and Logo Section */}
+          <Box display="flex" alignItems="center">
+            {/* Mobile Sidebar Toggle */}
+            {sidebarToggle && isMobile && (
+              <IconButton
+                onClick={() => setSidebarOpen && setSidebarOpen(!sidebarOpen)}
+                sx={{
+                  color: theme.palette.text.primary,
+                  mr: 1,
+                }}
+              >
+                {sidebarOpen ? <Close /> : <MenuIcon />}
+              </IconButton>
+            )}
+
+            {/* Logo Section */}
+            <Box
+              display="flex"
+              alignItems="center"
+              gap={1}
+              component={Link}
+              to="/"
               sx={{
-                color: theme.palette.primary.main,
-                fontSize: 28,
-              }}
-            />
-            <Typography
-              variant="h6"
-              sx={{
-                fontWeight: "bold",
-                background: `linear-gradient(45deg, ${theme.palette.primary.main}, ${theme.palette.primary.light})`,
-                WebkitBackgroundClip: "text",
-                WebkitTextFillColor: "transparent",
+                color: theme.palette.text.primary,
+                textDecoration: "none",
+                transition: "transform 0.2s ease-in-out",
+                "&:hover": {
+                  transform: "scale(1.05)",
+                },
               }}
             >
-              {t("home")}
-            </Typography>
+              <SchoolIcon
+                sx={{
+                  color: theme.palette.primary.main,
+                  fontSize: { xs: 24, sm: 28 },
+                }}
+              />
+              <Typography
+                variant="h6"
+                sx={{
+                  fontWeight: "bold",
+                  background: `linear-gradient(45deg, ${theme.palette.primary.main}, ${theme.palette.primary.light})`,
+                  WebkitBackgroundClip: "text",
+                  WebkitTextFillColor: "transparent",
+                  fontSize: { xs: "1rem", sm: "1.25rem" },
+                  display: { xs: "none", sm: "block" },
+                }}
+              >
+                {t("home")}
+              </Typography>
+            </Box>
           </Box>
 
-          <Box display="flex" alignItems="center" gap={1}>
-            {/* 🌗 Theme toggle */}
+          {/* Right Side Controls */}
+          <Box display="flex" alignItems="center" gap={{ xs: 0.5, sm: 1 }}>
+            {/* Theme Toggle */}
             <Tooltip title={mode === "light" ? "Dark Mode" : "Light Mode"}>
               <IconButton
                 onClick={() => setMode(mode === "light" ? "dark" : "light")}
@@ -168,7 +207,7 @@ const Navbar = ({ mode, setMode }: Props) => {
               </IconButton>
             </Tooltip>
 
-            {/* 🌍 Language Dropdown */}
+            {/* Language Dropdown */}
             <Tooltip title={t("language") || "Language"}>
               <IconButton
                 onClick={handleLangClick}
@@ -221,69 +260,141 @@ const Navbar = ({ mode, setMode }: Props) => {
               <MenuItem onClick={() => handleLangClose("ar")}>العربية</MenuItem>
             </Menu>
 
-            {/* 🔐 Auth Buttons */}
+            {/* Auth Buttons */}
             {!token ? (
-              <Button
-                variant="contained"
-                disableElevation
-                onClick={() => navigate("/signin")}
-                sx={{
-                  borderRadius: 2,
-                  px: 2,
-                  background: `linear-gradient(45deg, ${theme.palette.primary.main}, ${theme.palette.primary.light})`,
-                  transition: "all 0.3s ease",
-                  "&:hover": {
-                    transform: "translateY(-2px)",
-                    boxShadow: `0 4px 8px ${alpha(
-                      theme.palette.primary.main,
-                      0.25
-                    )}`,
-                  },
-                }}
-              >
-                {t("signIn")}
-              </Button>
-            ) : (
-              <>
-                {!isGuest && (
-                  <Button
-                    variant="outlined"
-                    onClick={() => navigate("/dashboard")}
+              // Sign In Button
+              isMobile ? (
+                <Tooltip title={t("signIn")}>
+                  <IconButton
+                    onClick={() => navigate("/signin")}
+                    color="primary"
                     sx={{
-                      borderRadius: 2,
-                      borderColor: theme.palette.primary.main,
-                      color: theme.palette.primary.main,
-                      transition: "all 0.3s ease",
+                      background: `linear-gradient(45deg, ${theme.palette.primary.main}, ${theme.palette.primary.light})`,
+                      color: "white",
                       "&:hover": {
-                        transform: "translateY(-2px)",
-                        borderColor: theme.palette.primary.main,
-                        backgroundColor: alpha(
+                        boxShadow: `0 4px 8px ${alpha(
                           theme.palette.primary.main,
-                          0.05
-                        ),
+                          0.25
+                        )}`,
                       },
                     }}
                   >
-                    {t("dashboard")}
-                  </Button>
-                )}
+                    <LoginIcon />
+                  </IconButton>
+                </Tooltip>
+              ) : (
                 <Button
-                  variant="outlined"
-                  onClick={handleLogout}
+                  variant="contained"
+                  disableElevation
+                  onClick={() => navigate("/signin")}
                   sx={{
                     borderRadius: 2,
-                    borderColor: theme.palette.error.main,
-                    color: theme.palette.error.main,
+                    px: { xs: 1, sm: 2 },
+                    py: { xs: 0.5, sm: 1 },
+                    fontSize: { xs: "0.75rem", sm: "0.875rem" },
+                    background: `linear-gradient(45deg, ${theme.palette.primary.main}, ${theme.palette.primary.light})`,
                     transition: "all 0.3s ease",
                     "&:hover": {
                       transform: "translateY(-2px)",
-                      borderColor: theme.palette.error.main,
-                      backgroundColor: alpha(theme.palette.error.main, 0.05),
+                      boxShadow: `0 4px 8px ${alpha(
+                        theme.palette.primary.main,
+                        0.25
+                      )}`,
                     },
                   }}
                 >
-                  {t("logout")}
+                  {t("signIn")}
                 </Button>
+              )
+            ) : (
+              <>
+                {/* Dashboard Button */}
+                {!isGuest &&
+                  (isMobile ? (
+                    <Tooltip title={t("dashboard")}>
+                      <IconButton
+                        onClick={() => navigate("/dashboard")}
+                        color="primary"
+                        sx={{
+                          border: `1px solid ${theme.palette.primary.main}`,
+                          "&:hover": {
+                            backgroundColor: alpha(
+                              theme.palette.primary.main,
+                              0.05
+                            ),
+                          },
+                        }}
+                      >
+                        <DashboardIcon />
+                      </IconButton>
+                    </Tooltip>
+                  ) : (
+                    <Button
+                      variant="outlined"
+                      onClick={() => navigate("/dashboard")}
+                      sx={{
+                        borderRadius: 2,
+                        borderColor: theme.palette.primary.main,
+                        color: theme.palette.primary.main,
+                        transition: "all 0.3s ease",
+                        px: { xs: 1, sm: 2 },
+                        py: { xs: 0.5, sm: 1 },
+                        fontSize: { xs: "0.75rem", sm: "0.875rem" },
+                        "&:hover": {
+                          transform: "translateY(-2px)",
+                          borderColor: theme.palette.primary.main,
+                          backgroundColor: alpha(
+                            theme.palette.primary.main,
+                            0.05
+                          ),
+                        },
+                      }}
+                    >
+                      {isTablet ? t("dashboardShort") : t("dashboard")}
+                    </Button>
+                  ))}
+
+                {/* Logout Button */}
+                {isMobile ? (
+                  <Tooltip title={t("logout")}>
+                    <IconButton
+                      onClick={handleLogout}
+                      color="error"
+                      sx={{
+                        border: `1px solid ${theme.palette.error.main}`,
+                        "&:hover": {
+                          backgroundColor: alpha(
+                            theme.palette.error.main,
+                            0.05
+                          ),
+                        },
+                      }}
+                    >
+                      <LogoutIcon />
+                    </IconButton>
+                  </Tooltip>
+                ) : (
+                  <Button
+                    variant="outlined"
+                    onClick={handleLogout}
+                    sx={{
+                      borderRadius: 2,
+                      borderColor: theme.palette.error.main,
+                      color: theme.palette.error.main,
+                      transition: "all 0.3s ease",
+                      px: { xs: 1, sm: 2 },
+                      py: { xs: 0.5, sm: 1 },
+                      fontSize: { xs: "0.75rem", sm: "0.875rem" },
+                      "&:hover": {
+                        transform: "translateY(-2px)",
+                        borderColor: theme.palette.error.main,
+                        backgroundColor: alpha(theme.palette.error.main, 0.05),
+                      },
+                    }}
+                  >
+                    {isTablet ? t("logoutShort") : t("logout")}
+                  </Button>
+                )}
               </>
             )}
           </Box>

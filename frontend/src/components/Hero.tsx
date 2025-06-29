@@ -8,6 +8,7 @@ const Hero = () => {
   const loading = useSelector(selectAuthLoading);
   const theme = useTheme();
   const { t } = useTranslation();
+  const darkMode = theme.palette.mode === "dark";
 
   if (loading) return <CircularProgress />;
 
@@ -24,15 +25,14 @@ const Hero = () => {
         justifyContent: "center",
         textAlign: "center",
         px: 2,
-        color: theme.palette.mode === "dark" ? "#fff" : "#000",
+        color: darkMode ? "#fff" : "#000",
         "&::before": {
           content: '""',
           position: "absolute",
           inset: 0,
-          backgroundColor:
-            theme.palette.mode === "dark"
-              ? "rgba(0,0,0,0.6)"
-              : "rgba(255,255,255,0.6)",
+          backgroundColor: darkMode
+            ? "rgba(0,0,0,0.6)"
+            : "rgba(255,255,255,0.6)",
           backdropFilter: "blur(2px)",
           zIndex: 1,
         },
@@ -54,11 +54,10 @@ const Hero = () => {
           borderRadius: 3,
           letterSpacing: 1.2,
           textShadow: "1px 1px 4px rgba(0,0,0,0.4)",
-          backgroundColor:
-            theme.palette.mode === "dark"
-              ? "rgba(0,0,0,0.5)"
-              : "rgba(255,255,255,0.7)",
-          color: theme.palette.mode === "dark" ? "#fff" : "#000",
+          backgroundColor: darkMode
+            ? "rgba(0,0,0,0.5)"
+            : "rgba(255,255,255,0.7)",
+          color: darkMode ? "#fff" : "#000",
         }}
       >
         {t("welcome")}
